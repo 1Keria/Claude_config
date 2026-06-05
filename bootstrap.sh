@@ -128,7 +128,14 @@ fi
 
 if [[ -f "${REPO}/settings.json" ]]; then
   log "同步 settings.json -> ${CLAUDE_DIR}/settings.json"
-  cp "${REPO}/settings.json" "${CLAUDE_DIR}/settings.json"
+  if [[ -n "${ANTHROPIC_AUTH_TOKEN:-}" ]]; then
+    jq --arg token "$ANTHROPIC_AUTH_TOKEN" \
+      '.env.ANTHROPIC_AUTH_TOKEN = $token' \
+      "${REPO}/settings.json" > "${CLAUDE_DIR}/settings.json"
+  else
+    cp "${REPO}/settings.json" "${CLAUDE_DIR}/settings.json"
+    warn "未设置 ANTHROPIC_AUTH_TOKEN，第三方 API 可能无法使用（请在 .env 中配置）"
+  fi
 fi
 
 if [[ -f "${REPO}/CLAUDE.md" ]]; then
@@ -142,7 +149,7 @@ echo ""
 log "恢复完成！"
 echo ""
 echo "  下一步："
-echo "    1. 若尚未登录:  claude login"
+echo "    1. 使用第三方 API 时无需 claude login；官方订阅用户可运行 claude login"
 echo "    2. 验证插件:     claude plugin list"
 echo "    3. 验证 MCP:     claude mcp get <name>"
 echo "    4. 启动 Claude:  claude"
