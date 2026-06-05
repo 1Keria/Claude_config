@@ -1,0 +1,10 @@
+# Claude Code Marketplace 清单
+# 每行一个来源，bootstrap.sh 会自动添加
+# 以 # 开头的行为注释，空行忽略
+#
+# 格式示例：
+#   anthropics/claude-plugins-community          # GitHub 仓库
+#   anthropics/claude-code                       # 演示 marketplace
+#   https://example.com/marketplace.json         # 远程 URL
+#
+# 官方商店 claude-plugins-official 默认已内置，无需添加
