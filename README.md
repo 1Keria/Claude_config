@@ -50,38 +50,31 @@ claude-setup/
 
 ---
 
-## 第三方 API 登录（Right Code）
+## 第三方 API 登录（讯飞 MaaS）
 
-本仓库已配置 [Right Code](https://docs.right.codes/docs/rc_cli_config/claudecode) 作为 Claude Code 的 API 来源，**无需运行 `claude login`**。
+本仓库已配置**讯飞 MaaS 编码 API** 作为 Claude Code 的 API 来源，**无需运行 `claude login`**。
 
 ### 配置说明
 
 | 配置项 | 存放位置 | 说明 |
 |--------|----------|------|
-| API 地址 | `settings.json` → `ANTHROPIC_BASE_URL` | 当前：`https://right.codes/claude-aws` |
-| 默认模型 | `settings.json` | Sonnet / Opus / Haiku 模型 ID |
-| API Key | `.env` → `ANTHROPIC_AUTH_TOKEN` | **不进 Git**，bootstrap 时注入 |
+| API 地址 | `settings.json` → `ANTHROPIC_BASE_URL` | 当前：`https://maas-coding-api.cn-huabei-1.xf-yun.com/anthropic` |
+| 默认模型 | `settings.json` | 当前：`astron-code-latest` |
+| API Key | `.env` → `ANTHROPIC_AUTH_TOKEN` | 格式 `appid:secret`，**不进 Git**，bootstrap 时注入 |
 
-Right Code 提供两个渠道（如需切换，改 `settings.json` 中的 `ANTHROPIC_BASE_URL`）：
+当前模型配置（Sonnet / Opus / Haiku 均指向同一模型）：
 
-| 渠道 | 地址 |
-|------|------|
-| CC 官渠 | `https://right.codes/claude` |
-| AWS 渠道 | `https://right.codes/claude-aws`（当前使用） |
+- `astron-code-latest`
 
-当前可用模型（以网关实际返回为准）：
-
-- `claude-sonnet-4-6`
-- `claude-opus-4-6` / `claude-opus-4-7` / `claude-opus-4-8`
-- `claude-haiku-4-5-20251001`
+> 该网关不提供 `/v1/models` 列表，因此未启用 `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY`。切换模型时直接修改 `settings.json` 中的 `ANTHROPIC_MODEL` 及 `ANTHROPIC_DEFAULT_*_MODEL`。
 
 ### 首次配置 API Key
 
 ```bash
 cd ~/claude-setup
 cp .env.example .env
-# 编辑 .env，填入 Right Code 后台生成的 API Key：
-# ANTHROPIC_AUTH_TOKEN=sk-xxxxxxxx
+# 编辑 .env，填入讯飞 MaaS 的 appid:secret：
+# ANTHROPIC_AUTH_TOKEN=your-appid:your-secret
 
 ~/claude-setup/bootstrap.sh
 ```
@@ -89,7 +82,7 @@ cp .env.example .env
 ### 验证是否可用
 
 ```bash
-claude -p "你好" --model claude-sonnet-4-6
+claude -p "你好" --model astron-code-latest
 # 正常返回内容即表示配置成功
 
 claude    # 启动交互式会话
@@ -99,7 +92,7 @@ claude    # 启动交互式会话
 
 - `.env` 已在 `.gitignore` 中，**切勿提交到 Git**
 - API Key 只写在 `.env`，`settings.json` 里不含密钥
-- 若密钥泄露，请到 Right Code 后台轮换
+- 若密钥泄露，请到讯飞 MaaS 控制台轮换
 
 ---
 
@@ -139,14 +132,14 @@ git clone git@github.com:1Keria/Claude_config.git ~/claude-setup
 # 4. 配置密钥
 cp ~/claude-setup/.env.example ~/claude-setup/.env
 # 编辑 .env：
-#   - ANTHROPIC_AUTH_TOKEN（Right Code API Key，必需）
+#   - ANTHROPIC_AUTH_TOKEN（讯飞 MaaS appid:secret，必需）
 #   - 其他 MCP 密钥（按需）
 
 # 5. 一键恢复
 ~/claude-setup/bootstrap.sh
 
 # 6. 验证
-claude -p "测试" --model claude-sonnet-4-6
+claude -p "测试" --model astron-code-latest
 claude plugin list
 ls ~/.claude/skills/
 claude
@@ -243,12 +236,12 @@ git push
 - 确认 `.env` 中 `ANTHROPIC_AUTH_TOKEN` 已填写
 - 确认已运行 `bootstrap.sh`
 - 检查 `settings.json` 中 `ANTHROPIC_BASE_URL` 是否正确
-- 使用网关支持的模型名，例如 `claude-sonnet-4-6`（不要用 `sonnet` 别名）
-- 测试：`claude -p "hi" --model claude-sonnet-4-6`
+- 使用网关支持的模型名，例如 `astron-code-latest`（不要用 `sonnet` 等别名）
+- 测试：`claude -p "hi" --model astron-code-latest`
 
 ### 还需要 `claude login` 吗？
 
-使用 Right Code 第三方 API 时**不需要**。若改回 Anthropic 官方订阅，删除或注释 `settings.json` 中的 `ANTHROPIC_BASE_URL`，然后运行 `claude login`。
+使用讯飞 MaaS 等第三方 API 时**不需要**。若改回 Anthropic 官方订阅，删除 `settings.json` 中的 `ANTHROPIC_BASE_URL`，然后运行 `claude login`。
 
 ### Plugin 安装失败？
 
@@ -278,6 +271,5 @@ git push
 
 ## 参考链接
 
-- [Right Code - Claude Code 配置文档](https://docs.right.codes/docs/rc_cli_config/claudecode)
 - [Claude Code 环境变量](https://code.claude.com/docs/en/env-vars)
 - [Claude Code Plugin 文档](https://code.claude.com/docs/en/discover-plugins)
