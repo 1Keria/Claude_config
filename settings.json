@@ -4,11 +4,11 @@
     "deny": []
   },
   "env": {
-    "ANTHROPIC_BASE_URL": "https://maas-coding-api.cn-huabei-1.xf-yun.com/anthropic",
-    "ANTHROPIC_MODEL": "astron-code-latest",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "astron-code-latest",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "astron-code-latest",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "astron-code-latest",
+    "ANTHROPIC_BASE_URL": "https://api.worldbase.ai",
+    "ANTHROPIC_MODEL": "claude-fable-5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-fable-5",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-fable-5",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-fable-5",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   }
 }
