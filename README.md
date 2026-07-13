@@ -50,23 +50,28 @@ claude-setup/
 
 ---
 
-## 第三方 API 登录（WorldBase）
+## 第三方 API 登录（Auto-Code）
 
-本仓库已配置 [WorldBase API](https://api.worldbase.ai) 作为 Claude Code 的 API 来源，**无需运行 `claude login`**。
+本仓库已配置 [Auto-Code](https://vip.auto-code.net) 作为 Claude Code 的 API 来源，**无需运行 `claude login`**。
 
 ### 配置说明
 
 | 配置项 | 存放位置 | 说明 |
 |--------|----------|------|
-| API 地址 | `settings.json` → `ANTHROPIC_BASE_URL` | 当前：`https://api.worldbase.ai` |
-| 默认模型 | `settings.json` | 当前：`claude-fable-5` |
+| API 地址 | `settings.json` → `ANTHROPIC_BASE_URL` | 当前：`https://vip.auto-code.net` |
+| 默认模型 | `settings.json` | 主模型 `claude-fable-5`，分档见下 |
 | API Key | `.env` → `ANTHROPIC_AUTH_TOKEN` | 格式 `sk-...`，**不进 Git**，bootstrap 时注入 |
 
-当前模型配置（Sonnet / Opus / Haiku 均指向同一模型）：
+当前模型分档：
 
-- `claude-fable-5`
+| 档位 | 模型 ID |
+|------|---------|
+| 主模型 | `claude-fable-5` |
+| Sonnet | `claude-sonnet-5` |
+| Opus | `claude-opus-4-8` |
+| Haiku | `claude-haiku-4-5-20251001` |
 
-> 切换模型时修改 `settings.json` 中的 `ANTHROPIC_MODEL` 及 `ANTHROPIC_DEFAULT_*_MODEL`，然后运行 `bootstrap.sh`。
+> 该网关支持 `/v1/models`，已启用 `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY`，可在 `/model` 中浏览可用模型。切换模型时修改 `settings.json` 后运行 `bootstrap.sh`。
 
 ### 首次配置 API Key
 
@@ -132,7 +137,7 @@ git clone git@github.com:1Keria/Claude_config.git ~/claude-setup
 # 4. 配置密钥
 cp ~/claude-setup/.env.example ~/claude-setup/.env
 # 编辑 .env：
-#   - ANTHROPIC_AUTH_TOKEN（WorldBase API Key，必需）
+#   - ANTHROPIC_AUTH_TOKEN（Auto-Code API Key，必需）
 #   - 其他 MCP 密钥（按需）
 
 # 5. 一键恢复
@@ -241,7 +246,7 @@ git push
 
 ### 还需要 `claude login` 吗？
 
-使用 WorldBase 等第三方 API 时**不需要**。若改回 Anthropic 官方订阅，删除 `settings.json` 中的 `ANTHROPIC_BASE_URL`，然后运行 `claude login`。
+使用 Auto-Code 等第三方 API 时**不需要**。若改回 Anthropic 官方订阅，删除 `settings.json` 中的 `ANTHROPIC_BASE_URL`，然后运行 `claude login`。
 
 ### Plugin 安装失败？
 
