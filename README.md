@@ -62,14 +62,14 @@ claude-setup/
 | 默认模型 | `settings.json` | 主模型 `claude-fable-5`，分档见下 |
 | API Key | `.env` → `ANTHROPIC_AUTH_TOKEN` | 格式 `sk-...`，**不进 Git**，bootstrap 时注入 |
 
-当前模型分档（均使用 `gpt-5.6-sol`）：
+当前模型分档（均使用 `glm-5.2`）：
 
 | 档位 | 模型 ID |
 |------|---------|
-| 主模型 | `gpt-5.6-sol` |
-| Sonnet | `gpt-5.6-sol` |
-| Opus | `gpt-5.6-sol` |
-| Haiku | `gpt-5.6-sol` |
+| 主模型 | `glm-5.2` |
+| Sonnet | `glm-5.2` |
+| Opus | `glm-5.2` |
+| Haiku | `glm-5.2` |
 
 > 该网关支持 `/v1/models`，已启用 `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY`，可在 `/model` 中浏览可用模型。切换模型时修改 `settings.json` 后运行 `bootstrap.sh`。
 
@@ -87,7 +87,7 @@ cp .env.example .env
 ### 验证是否可用
 
 ```bash
-claude -p "你好" --model gpt-5.6-sol
+claude -p "你好" --model glm-5.2
 # 正常返回内容即表示配置成功
 
 claude    # 启动交互式会话
@@ -241,8 +241,8 @@ git push
 - 确认 `.env` 中 `ANTHROPIC_AUTH_TOKEN` 已填写
 - 确认已运行 `bootstrap.sh`
 - 检查 `settings.json` 中 `ANTHROPIC_BASE_URL` 是否正确
-- 使用网关支持的模型名，例如 `gpt-5.6-sol`
-- 测试：`claude -p "hi" --model gpt-5.6-sol`
+- 使用网关支持的模型名，例如 `glm-5.2`
+- 测试：`claude -p "hi" --model glm-5.2`
 
 ### 还需要 `claude login` 吗？
 
